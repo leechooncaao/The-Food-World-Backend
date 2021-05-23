@@ -18,4 +18,5 @@ public interface RatingRepository extends JpaRepository<Rating, Integer> {
     List<RatingInfo> getRatingInfoByFoodId(@Param("foodId") Integer foodId);
 
     Rating findByFood_FoodIdAndAccount_AccountId(Integer foodId, Integer accountId);
+
 }
