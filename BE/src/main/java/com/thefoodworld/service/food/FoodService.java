@@ -9,4 +9,8 @@ public interface FoodService {
 
     Page<Food> findAllFoodsByName(String foodName, Pageable pageable);
 
+    Page<Food> findAllFoodsByCategoryId(Integer foodCategoryId, Pageable pageable);
+
+    Page<Food> findAllFoodsByCategoryIdAndFoodName(Integer foodCategoryId, String foodName, Pageable pageable);
+
 }

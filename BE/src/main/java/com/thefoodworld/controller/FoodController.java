@@ -34,9 +34,10 @@ public class FoodController {
 
     @GetMapping("")
     public ResponseEntity<Map<String, Object>> getAllFoodsPage(@RequestParam(required = false) String foodName,
+                                                               @RequestParam(required = false) Integer categoryId,
                                                                @RequestParam(defaultValue = "0") int page,
                                                                @RequestParam(defaultValue = "25") int size,
-                                                               @RequestParam(required = false, defaultValue = "foodId,asc") String[] sortCriteria) {
+                                                               @RequestParam(defaultValue = "foodId,asc") String[] sortCriteria) {
 
         try {
             Pageable paging;
@@ -51,16 +52,22 @@ public class FoodController {
             }
 
             if (foodName == null) {
-                // get all list of foods with pagination
-                pageFoods = foodService.findAllFoods(paging);
+                if (categoryId == null) {
+                    pageFoods = foodService.findAllFoods(paging);
+                } else {
+                    pageFoods = foodService.findAllFoodsByCategoryId(categoryId, paging);
+                }
             } else {
-                // get all list of foods by foodName with pagination
-                pageFoods = foodService.findAllFoodsByName(foodName, paging);
+                if (categoryId == null) {
+                    pageFoods = foodService.findAllFoodsByName(foodName, paging);
+                } else {
+                    pageFoods = foodService.findAllFoodsByCategoryIdAndFoodName(categoryId, foodName, paging);
+                }
             }
 
             List<Food> foods = pageFoods.getContent();
 
-            if(foods.isEmpty()){
+            if (foods.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
 
@@ -72,8 +79,8 @@ public class FoodController {
 
             return new ResponseEntity<>(response, HttpStatus.OK);
 
-        }catch (Exception e) {
-            System.out.println(e);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
