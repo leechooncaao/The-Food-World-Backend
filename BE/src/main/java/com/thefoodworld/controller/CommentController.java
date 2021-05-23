@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @RestController
@@ -23,15 +24,56 @@ public class CommentController {
     private FoodService foodService;
 
     @GetMapping("/{foodId}")
-    public ResponseEntity<List<CommentDTO>> getAllCommentsOfFood(@PathVariable("foodId") Integer foodId){
-        try{
+    public ResponseEntity<List<CommentDTO>> getAllCommentsOfFood(@PathVariable("foodId") Integer foodId) {
+        try {
             Food food = foodService.findFoodById(foodId);
-            if(food == null){
+            if (food == null) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
 
             return new ResponseEntity<>(commentService.getAllCommentByFoodId(foodId), HttpStatus.OK);
-        }catch (Exception e){
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("")
+    public ResponseEntity<Comment> createComment(@RequestBody Comment comment) {
+        try {
+            comment.setCommentTime(new Timestamp(System.currentTimeMillis()));
+            return new ResponseEntity<>(commentService.createOrUpdateComment(comment), HttpStatus.CREATED);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/{commentId}")
+    public ResponseEntity<Comment> updateComment(@PathVariable("commentId") Integer commentId, @RequestBody Comment comment) {
+        try {
+            if (commentService.getCommentById(commentId) == null) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
+            comment.setCommentTime(new Timestamp(System.currentTimeMillis()));
+
+            return new ResponseEntity<>(commentService.createOrUpdateComment(comment), HttpStatus.CREATED);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("/{commentId}")
+    public ResponseEntity<Comment> removeComment(@PathVariable("commentId") Integer commentId){
+        try {
+            if (commentService.getCommentById(commentId) == null) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            commentService.removeCommentById(commentId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
