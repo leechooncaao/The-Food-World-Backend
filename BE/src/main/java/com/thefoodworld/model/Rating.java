@@ -21,6 +21,15 @@ public class Rating {
     @JoinColumn(name = "account_id", referencedColumnName = "account_id")
     private Account account;
 
+    public Rating(Integer ratingLevel, Food food, Account account) {
+        this.ratingLevel = ratingLevel;
+        this.food = food;
+        this.account = account;
+    }
+
+    public Rating() {
+    }
+
     public Integer getRatingId() {
         return ratingId;
     }

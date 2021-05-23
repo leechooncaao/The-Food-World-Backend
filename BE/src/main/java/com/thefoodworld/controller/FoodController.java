@@ -87,7 +87,7 @@ public class FoodController {
     }
 
     @GetMapping("/{foodId}")
-    public ResponseEntity<FoodDTO> getFoodById(@PathVariable("foodId") Integer foodId){
+    public ResponseEntity<FoodDTO> getDetailFoodById(@PathVariable("foodId") Integer foodId){
         try{
             Food foodFromDb = foodService.findFoodById(foodId);
             if(foodFromDb == null){

@@ -16,4 +16,6 @@ public interface RatingRepository extends JpaRepository<Rating, Integer> {
             "from Rating as r\n" +
             "where r.food.foodId = :foodId")
     List<RatingInfo> getRatingInfoByFoodId(@Param("foodId") Integer foodId);
+
+    Rating findByFood_FoodIdAndAccount_AccountId(Integer foodId, Integer accountId);
 }
