@@ -37,7 +37,7 @@ public class FoodController {
     public ResponseEntity<Map<String, Object>> getAllFoodsPage(@RequestParam(required = false) String foodName,
                                                                @RequestParam(required = false) Integer categoryId,
                                                                @RequestParam(defaultValue = "0") int page,
-                                                               @RequestParam(defaultValue = "25") int size,
+                                                               @RequestParam(defaultValue = "12") int size,
                                                                @RequestParam(defaultValue = "foodId,asc") String[] sortCriteria) {
 
         try {

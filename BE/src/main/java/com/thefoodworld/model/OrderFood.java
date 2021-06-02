@@ -15,8 +15,8 @@ public class OrderFood {
     private OrderBill orderBill;
 
     @ManyToOne
-    @JoinColumn(name = "cart_food_id", referencedColumnName = "cart_food_id")
-    private CartFood cartFood;
+    @JoinColumn(name = "food_id", referencedColumnName = "food_id")
+    private Food food;
 
     public Integer getOrderFoodId() {
         return orderFoodId;
@@ -34,11 +34,11 @@ public class OrderFood {
         this.orderBill = orderBill;
     }
 
-    public CartFood getCartFood() {
-        return cartFood;
+    public Food getFood() {
+        return food;
     }
 
-    public void setCartFood(CartFood cartFood) {
-        this.cartFood = cartFood;
+    public void setFood(Food food) {
+        this.food = food;
     }
 }

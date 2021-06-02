@@ -54,10 +54,9 @@ public class CommentController {
         try {
             if (commentService.getCommentById(commentId) == null) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }else {
+                comment.setCommentTime(commentService.getCommentById(commentId).getCommentTime());
             }
-
-            comment.setCommentTime(new Timestamp(System.currentTimeMillis()));
-
             return new ResponseEntity<>(commentService.createOrUpdateComment(comment), HttpStatus.CREATED);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -66,7 +65,7 @@ public class CommentController {
     }
 
     @DeleteMapping("/{commentId}")
-    public ResponseEntity<Comment> removeComment(@PathVariable("commentId") Integer commentId){
+    public ResponseEntity<Void> removeComment(@PathVariable("commentId") Integer commentId){
         try {
             if (commentService.getCommentById(commentId) == null) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

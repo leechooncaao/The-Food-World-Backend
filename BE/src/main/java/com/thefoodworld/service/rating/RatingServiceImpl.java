@@ -1,6 +1,7 @@
 package com.thefoodworld.service.rating;
 
 import com.thefoodworld.model.Rating;
+import com.thefoodworld.model.dto.RatingInfo;
 import com.thefoodworld.repository.AccountRepository;
 import com.thefoodworld.repository.FoodRepository;
 import com.thefoodworld.repository.RatingRepository;
@@ -21,7 +22,7 @@ public class RatingServiceImpl implements RatingService{
 
 
     @Override
-    public Rating addNewRating(Rating rating) {
+    public Rating addOrUpdateRating(Rating rating) {
         return ratingRepository.save(rating);
     }
 
@@ -31,7 +32,7 @@ public class RatingServiceImpl implements RatingService{
     }
 
     @Override
-    public Rating updateRating(Rating rating) {
-        return ratingRepository.save(rating);
+    public RatingInfo getRatingInfoByFoodId(Integer foodId) {
+        return ratingRepository.getRatingInfoByFoodId(foodId).get(0);
     }
 }

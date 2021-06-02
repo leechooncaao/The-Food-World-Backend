@@ -1,11 +1,12 @@
 package com.thefoodworld.service.rating;
 
 import com.thefoodworld.model.Rating;
+import com.thefoodworld.model.dto.RatingInfo;
 
 public interface RatingService {
-    Rating addNewRating(Rating rating);
+    Rating addOrUpdateRating(Rating rating);
 
     Rating getRatingByFoodIdAndAccountId(Integer foodId, Integer accountId);
 
-    Rating updateRating(Rating rating);
+    RatingInfo getRatingInfoByFoodId(Integer foodId);
 }

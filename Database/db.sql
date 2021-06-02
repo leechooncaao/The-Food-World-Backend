@@ -113,33 +113,6 @@ KEY `fkIdx_92` (`account_id`),
 CONSTRAINT `FK_91` FOREIGN KEY `fkIdx_92` (`account_id`) REFERENCES `account` (`account_id`)
 );
 
--- ************************************** `cart`
-CREATE TABLE `cart`
-(
- `cart_id`    int AUTO_INCREMENT ,
- `account_id` int NOT NULL ,
-
-PRIMARY KEY (`cart_id`),
-KEY `fkIdx_102` (`account_id`),
-CONSTRAINT `FK_101` FOREIGN KEY `fkIdx_102` (`account_id`) REFERENCES `account` (`account_id`)
-);
-
--- ************************************** `cart_food`
-CREATE TABLE `cart_food`
-(
- `cart_food_id` int AUTO_INCREMENT ,
- `cart_id`      int NOT NULL ,
- `food_id`      int NOT NULL ,
- `quantity`     int NOT NULL ,
- `note`         text NULL ,
-
-PRIMARY KEY (`cart_food_id`),
-KEY `fkIdx_108` (`cart_id`),
-CONSTRAINT `FK_107` FOREIGN KEY `fkIdx_108` (`cart_id`) REFERENCES `cart` (`cart_id`),
-KEY `fkIdx_111` (`food_id`),
-CONSTRAINT `FK_110` FOREIGN KEY `fkIdx_111` (`food_id`) REFERENCES `food` (`food_id`)
-);
-
 -- ************************************** `order`
 CREATE TABLE `order_bill`
 (
@@ -159,13 +132,13 @@ CREATE TABLE `order_food`
 (
  `order_food_id` int AUTO_INCREMENT ,
  `order_id`      int NOT NULL ,
- `cart_food_id`  int NOT NULL ,
+ `food_id`  int NOT NULL ,
 
 PRIMARY KEY (`order_food_id`),
 KEY `fkIdx_148` (`order_id`),
 CONSTRAINT `FK_147` FOREIGN KEY `fkIdx_148` (`order_id`) REFERENCES `order_bill` (`order_id`),
-KEY `fkIdx_151` (`cart_food_id`),
-CONSTRAINT `FK_150` FOREIGN KEY `fkIdx_151` (`cart_food_id`) REFERENCES `cart_food` (`cart_food_id`)
+KEY `fkIdx_151` (`food_id`),
+CONSTRAINT `FK_150` FOREIGN KEY `fkIdx_151` (`food_id`) REFERENCES `food` (`food_id`)
 );
 
 -- ******************************************************************************************************

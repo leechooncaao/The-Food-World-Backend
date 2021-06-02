@@ -1,6 +1,5 @@
 package com.thefoodworld.model.dto;
 
-import java.sql.Timestamp;
 import java.util.Date;
 
 public class CommentDTO {
@@ -18,7 +17,11 @@ public class CommentDTO {
 
     private int ratingLevel;
 
-    public CommentDTO(int commentId, String commentContent, String commentImage, int foodId, int accountId, Date commentTime, int ratingLevel) {
+    private String customerAvatar;
+
+    private String customerName;
+
+    public CommentDTO(int commentId, String commentContent, String commentImage, int foodId, int accountId, Date commentTime, int ratingLevel, String customerAvatar, String customerName) {
         this.commentId = commentId;
         this.commentContent = commentContent;
         this.commentImage = commentImage;
@@ -26,6 +29,8 @@ public class CommentDTO {
         this.accountId = accountId;
         this.commentTime = commentTime;
         this.ratingLevel = ratingLevel;
+        this.customerAvatar = customerAvatar;
+        this.customerName = customerName;
     }
 
     public int getCommentId() {
@@ -82,5 +87,21 @@ public class CommentDTO {
 
     public void setRatingLevel(int ratingLevel) {
         this.ratingLevel = ratingLevel;
+    }
+
+    public String getCustomerAvatar() {
+        return customerAvatar;
+    }
+
+    public void setCustomerAvatar(String customerAvatar) {
+        this.customerAvatar = customerAvatar;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 }

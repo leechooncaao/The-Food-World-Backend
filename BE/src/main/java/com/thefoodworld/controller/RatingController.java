@@ -1,6 +1,7 @@
 package com.thefoodworld.controller;
 
 import com.thefoodworld.model.Rating;
+import com.thefoodworld.model.dto.RatingInfo;
 import com.thefoodworld.service.account.AccountService;
 import com.thefoodworld.service.food.FoodService;
 import com.thefoodworld.service.rating.RatingService;
@@ -23,39 +24,43 @@ public class RatingController {
     private AccountService accountService;
 
     @PostMapping("")
-    public ResponseEntity<Rating> addNewRating(@RequestBody Rating rating){
-        try{
-            return new ResponseEntity<>(ratingService.addNewRating(rating), HttpStatus.CREATED);
-        }catch (Exception e){
+    public ResponseEntity<Rating> addOrUpdateRating(@RequestBody Rating rating) {
+        try {
+            return new ResponseEntity<>(ratingService.addOrUpdateRating(rating), HttpStatus.CREATED);
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping("")
-    public ResponseEntity<Rating> getRating(@RequestParam Integer foodId, @RequestParam Integer accountId){
-        try{
-            if(foodService.findFoodById(foodId) == null){
+    public ResponseEntity<Rating> getRating(@RequestParam Integer foodId, @RequestParam Integer accountId) {
+        try {
+            if (foodService.findFoodById(foodId) == null) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
 
-            if(accountService.findAccountById(accountId) == null){
+            if (accountService.findAccountById(accountId) == null) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
 
             return new ResponseEntity<>(ratingService.getRatingByFoodIdAndAccountId(foodId, accountId), HttpStatus.OK);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @PutMapping("")
-    public ResponseEntity<Rating> updateRating(@RequestBody Rating newRating){
+    @GetMapping("/{foodId}")
+    public ResponseEntity<RatingInfo> getRatingInfo(@PathVariable("foodId") Integer foodId){
         try{
-            return new ResponseEntity<>(ratingService.updateRating(newRating), HttpStatus.OK);
-        }catch (Exception e){
+            if (foodService.findFoodById(foodId) == null) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
+            return new ResponseEntity<>(ratingService.getRatingInfoByFoodId(foodId), HttpStatus.OK);
+        }catch (Exception e) {
             System.out.println(e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
