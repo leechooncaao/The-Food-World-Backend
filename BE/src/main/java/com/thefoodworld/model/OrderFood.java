@@ -18,6 +18,18 @@ public class OrderFood {
     @JoinColumn(name = "food_id", referencedColumnName = "food_id")
     private Food food;
 
+    @Column(name = "food_quantity")
+    private Integer foodQuantity;
+
+    public OrderFood(OrderBill orderBill, Food food, Integer foodQuantity) {
+        this.orderBill = orderBill;
+        this.food = food;
+        this.foodQuantity = foodQuantity;
+    }
+
+    public OrderFood() {
+    }
+
     public Integer getOrderFoodId() {
         return orderFoodId;
     }
@@ -40,5 +52,13 @@ public class OrderFood {
 
     public void setFood(Food food) {
         this.food = food;
+    }
+
+    public Integer getFoodQuantity() {
+        return foodQuantity;
+    }
+
+    public void setFoodQuantity(Integer foodQuantity) {
+        this.foodQuantity = foodQuantity;
     }
 }
